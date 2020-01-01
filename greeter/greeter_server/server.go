@@ -67,10 +67,8 @@ func (*Server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
 		}
 
 		firstName := req.GetGreeting().GetFirstName()
-		res = "Hello " + firstName + "!"
-
+		res += "Hello " + firstName + "! ;"
 	}
-
 }
 
 // 	LongGreet(GreetService_LongGreetServer) error
@@ -95,5 +93,4 @@ func main() {
 	if err := server.Serve(listener); err != nil {
 		log.Fatal("Failed to connect: ", err)
 	}
-
 }
