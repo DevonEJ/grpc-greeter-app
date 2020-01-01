@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 	"net"
 	"strconv"
@@ -31,7 +32,7 @@ func (*Server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 	return resMssg, nil
 }
 
-//GreetManyTimes implements a streaming api to send many greeting responses
+//GreetManyTimes implements a server streaming api to send many greeting responses
 func (*Server) GreetManyTimes(req *greetpb.GreetManyTimesRequest, stream greetpb.GreetService_GreetManyTimesServer) error {
 	log.Print("Request made to GreetManyTimes function: ", req)
 	// Extract fields from the protobuf messages in the client request
@@ -47,6 +48,32 @@ func (*Server) GreetManyTimes(req *greetpb.GreetManyTimesRequest, stream greetpb
 	}
 	return nil
 }
+
+//LongGreet implements a client streaming api to send many greeting requests
+func (*Server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
+	log.Print("Request made to LongGreet function.")
+
+	res := ""
+	for {
+		req, err := stream.Recv()
+
+		if err == io.EOF {
+			return stream.SendAndClose(&greetpb.LongGreetResponse{
+				Response: res,
+			})
+		}
+		if err != nil {
+			log.Fatal("an error occurred whilst reading client stream: ", err)
+		}
+
+		firstName := req.GetGreeting().GetFirstName()
+		res = "Hello " + firstName + "!"
+
+	}
+
+}
+
+// 	LongGreet(GreetService_LongGreetServer) error
 
 func main() {
 
