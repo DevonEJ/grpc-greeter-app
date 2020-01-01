@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 
@@ -10,6 +11,21 @@ import (
 )
 
 type Server struct{}
+
+//Greet implements the GreetServiceServer interface (with a Greet method) from the pb.go file
+func (*Server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
+	// Extract fields from the protobuf messages in the client request
+	firstName := req.GetGreeting().GetFirstName()
+	lastName := req.GetGreeting().GetLastName()
+	coffee := req.GetGreeting().GetFavouriteCoffee()
+
+	// Create response message
+	response := "Hello " + firstName + " " + lastName + "! Have a " + coffee + " on me :)"
+	resMssg := &greetpb.GreetResponse{
+		Response: response,
+	}
+	return resMssg, nil
+}
 
 func main() {
 
