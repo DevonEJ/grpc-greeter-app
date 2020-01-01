@@ -32,6 +32,4 @@ func main() {
 		log.Fatal("Failed to connect: ", err)
 	}
 
-	log.Print("successfully listening on port: ", port)
-
 }
