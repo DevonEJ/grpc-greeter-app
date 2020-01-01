@@ -7,9 +7,9 @@ option go_package="greetpb";
 
 // Define the greeting message, and the response and request messages
 message Greeting {
-    string firstName = 1;
-    string lastName = 2;
-    string favouriteCoffee = 3;
+    string FirstName = 1;
+    string LastName = 2;
+    string FavouriteCoffee = 3;
 
 }
 
