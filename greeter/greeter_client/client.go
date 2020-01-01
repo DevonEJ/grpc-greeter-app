@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
 
@@ -23,11 +24,11 @@ func main() {
 
 	c := greetpb.NewGreetServiceClient(conn)
 
-	//res, err := createUnaryCall(c)
+	res, err := createUnaryCall(c)
 
 	createServerStreamingCall(c)
 
-	//fmt.Println(res)
+	fmt.Println(res)
 }
 
 func createUnaryCall(c greetpb.GreetServiceClient) (*greetpb.GreetResponse, error) {
