@@ -21,6 +21,9 @@ message GreetResponse {
     string response = 1;
 }
 
-service GreetService {}
+service GreetService {
+    // Unary greeter api - define the rpc call
+    rpc Greet(GreetRequest) returns (GreetResponse) {};
+}
 
 
