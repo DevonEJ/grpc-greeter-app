@@ -63,7 +63,7 @@ func main() {
 
 	greetpb.RegisterGreetServiceServer(server, &Server{})
 
-	log.Print("attempting to listen on port: ", port)
+	log.Print("listening on port: ", port)
 
 	if err := server.Serve(listener); err != nil {
 		log.Fatal("Failed to connect: ", err)
