@@ -4,15 +4,18 @@ import (
 	"context"
 	"log"
 	"net"
+	"strconv"
+	"time"
 
 	"../greetpb"
 
 	"google.golang.org/grpc"
 )
 
+//Server implements the GreetServiceServer interface from the pb.go file, with the below methods
 type Server struct{}
 
-//Greet implements the GreetServiceServer interface (with a Greet method) from the pb.go file
+//Greet implements a unary api to send a single greeting response
 func (*Server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
 	log.Print("Request made to Greet function: ", req)
 	// Extract fields from the protobuf messages in the client request
@@ -26,6 +29,23 @@ func (*Server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 		Response: response,
 	}
 	return resMssg, nil
+}
+
+//GreetManyTimes implements a streaming api to send many greeting responses
+func (*Server) GreetManyTimes(req *greetpb.GreetManyTimesRequest, stream greetpb.GreetService_GreetManyTimesServer) error {
+	log.Print("Request made to GreetManyTimes function: ", req)
+	// Extract fields from the protobuf messages in the client request
+	firstName := req.GetGreeting().GetFirstName()
+
+	for i := 0; i < 10; i++ {
+		response := "Hello " + firstName + ". You are number: " + strconv.Itoa(i)
+		res := &greetpb.GreetManyTimesResponse{
+			Response: response,
+		}
+		stream.Send(res)
+		time.Sleep(1000 * time.Millisecond)
+	}
+	return nil
 }
 
 func main() {
