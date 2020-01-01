@@ -14,6 +14,7 @@ type Server struct{}
 
 //Greet implements the GreetServiceServer interface (with a Greet method) from the pb.go file
 func (*Server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
+	log.Print("Request made to Greet function.")
 	// Extract fields from the protobuf messages in the client request
 	firstName := req.GetGreeting().GetFirstName()
 	lastName := req.GetGreeting().GetLastName()
