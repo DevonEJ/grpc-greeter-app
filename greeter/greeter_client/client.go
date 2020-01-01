@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"../greetpb"
@@ -22,6 +23,12 @@ func main() {
 
 	c := greetpb.NewGreetServiceClient(conn)
 
+	res, err := createUnaryCall(c)
+
+	fmt.Println(res)
+}
+
+func createUnaryCall(c greetpb.GreetServiceClient) (*greetpb.GreetResponse, error) {
 	// Create request object - a greet request which holds a greeting
 	req := &greetpb.GreetRequest{
 		Greeting: &greetpb.Greeting{
@@ -30,13 +37,11 @@ func main() {
 			FavouriteCoffee: "Cappuccino",
 		},
 	}
-
 	res, err := c.Greet(context.Background(), req)
-
 	if err != nil {
 		log.Fatal("Greet request raised an error: ", err)
+		return nil, err
 	}
-
 	log.Print("response from Greet: ", res)
-
+	return res, nil
 }
