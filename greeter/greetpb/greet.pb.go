@@ -22,15 +22,163 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// Define the greeting message, and the response and request messages
+type Greeting struct {
+	FirstName            string   `protobuf:"bytes,1,opt,name=firstName,proto3" json:"firstName,omitempty"`
+	LastName             string   `protobuf:"bytes,2,opt,name=lastName,proto3" json:"lastName,omitempty"`
+	FavouriteCoffee      string   `protobuf:"bytes,3,opt,name=favouriteCoffee,proto3" json:"favouriteCoffee,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Greeting) Reset()         { *m = Greeting{} }
+func (m *Greeting) String() string { return proto.CompactTextString(m) }
+func (*Greeting) ProtoMessage()    {}
+func (*Greeting) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cd67c47c0cf51822, []int{0}
+}
+
+func (m *Greeting) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Greeting.Unmarshal(m, b)
+}
+func (m *Greeting) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Greeting.Marshal(b, m, deterministic)
+}
+func (m *Greeting) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Greeting.Merge(m, src)
+}
+func (m *Greeting) XXX_Size() int {
+	return xxx_messageInfo_Greeting.Size(m)
+}
+func (m *Greeting) XXX_DiscardUnknown() {
+	xxx_messageInfo_Greeting.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Greeting proto.InternalMessageInfo
+
+func (m *Greeting) GetFirstName() string {
+	if m != nil {
+		return m.FirstName
+	}
+	return ""
+}
+
+func (m *Greeting) GetLastName() string {
+	if m != nil {
+		return m.LastName
+	}
+	return ""
+}
+
+func (m *Greeting) GetFavouriteCoffee() string {
+	if m != nil {
+		return m.FavouriteCoffee
+	}
+	return ""
+}
+
+type GreetRequest struct {
+	Greeting             *Greeting `protobuf:"bytes,1,opt,name=greeting,proto3" json:"greeting,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *GreetRequest) Reset()         { *m = GreetRequest{} }
+func (m *GreetRequest) String() string { return proto.CompactTextString(m) }
+func (*GreetRequest) ProtoMessage()    {}
+func (*GreetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cd67c47c0cf51822, []int{1}
+}
+
+func (m *GreetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GreetRequest.Unmarshal(m, b)
+}
+func (m *GreetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GreetRequest.Marshal(b, m, deterministic)
+}
+func (m *GreetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GreetRequest.Merge(m, src)
+}
+func (m *GreetRequest) XXX_Size() int {
+	return xxx_messageInfo_GreetRequest.Size(m)
+}
+func (m *GreetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GreetRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GreetRequest proto.InternalMessageInfo
+
+func (m *GreetRequest) GetGreeting() *Greeting {
+	if m != nil {
+		return m.Greeting
+	}
+	return nil
+}
+
+type GreetResponse struct {
+	Response             string   `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GreetResponse) Reset()         { *m = GreetResponse{} }
+func (m *GreetResponse) String() string { return proto.CompactTextString(m) }
+func (*GreetResponse) ProtoMessage()    {}
+func (*GreetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cd67c47c0cf51822, []int{2}
+}
+
+func (m *GreetResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GreetResponse.Unmarshal(m, b)
+}
+func (m *GreetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GreetResponse.Marshal(b, m, deterministic)
+}
+func (m *GreetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GreetResponse.Merge(m, src)
+}
+func (m *GreetResponse) XXX_Size() int {
+	return xxx_messageInfo_GreetResponse.Size(m)
+}
+func (m *GreetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GreetResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GreetResponse proto.InternalMessageInfo
+
+func (m *GreetResponse) GetResponse() string {
+	if m != nil {
+		return m.Response
+	}
+	return ""
+}
+
+func init() {
+	proto.RegisterType((*Greeting)(nil), "greeter.Greeting")
+	proto.RegisterType((*GreetRequest)(nil), "greeter.GreetRequest")
+	proto.RegisterType((*GreetResponse)(nil), "greeter.GreetResponse")
+}
+
 func init() { proto.RegisterFile("greetpb/greet.proto", fileDescriptor_cd67c47c0cf51822) }
 
 var fileDescriptor_cd67c47c0cf51822 = []byte{
-	// 72 bytes of a gzipped FileDescriptorProto
+	// 194 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4e, 0x2f, 0x4a, 0x4d,
 	0x2d, 0x29, 0x48, 0xd2, 0x07, 0xd3, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0xec, 0x60, 0x4e,
-	0x6a, 0x91, 0x11, 0x1f, 0x17, 0x8f, 0x3b, 0x88, 0x19, 0x9c, 0x5a, 0x54, 0x96, 0x99, 0x9c, 0xea,
-	0xc4, 0x19, 0xc5, 0x0e, 0x55, 0x9f, 0xc4, 0x06, 0x56, 0x6a, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff,
-	0xd3, 0x6d, 0x89, 0xd7, 0x41, 0x00, 0x00, 0x00,
+	0x6a, 0x91, 0x52, 0x1e, 0x17, 0x87, 0x3b, 0x88, 0x99, 0x99, 0x97, 0x2e, 0x24, 0xc3, 0xc5, 0x99,
+	0x96, 0x59, 0x54, 0x5c, 0xe2, 0x97, 0x98, 0x9b, 0x2a, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x19, 0x84,
+	0x10, 0x10, 0x92, 0xe2, 0xe2, 0xc8, 0x49, 0x84, 0x4a, 0x32, 0x81, 0x25, 0xe1, 0x7c, 0x21, 0x0d,
+	0x2e, 0xfe, 0xb4, 0xc4, 0xb2, 0xfc, 0xd2, 0xa2, 0xcc, 0x92, 0x54, 0xe7, 0xfc, 0xb4, 0xb4, 0xd4,
+	0x54, 0x09, 0x66, 0xb0, 0x12, 0x74, 0x61, 0x25, 0x5b, 0x2e, 0x1e, 0xb0, 0x7d, 0x41, 0xa9, 0x85,
+	0xa5, 0xa9, 0xc5, 0x25, 0x42, 0xba, 0x5c, 0x1c, 0xe9, 0x50, 0xfb, 0xc1, 0x56, 0x72, 0x1b, 0x09,
+	0xea, 0x41, 0xdd, 0xa6, 0x07, 0x73, 0x58, 0x10, 0x5c, 0x89, 0x92, 0x36, 0x17, 0x2f, 0x54, 0x7b,
+	0x71, 0x41, 0x7e, 0x5e, 0x31, 0xd8, 0x55, 0x45, 0x50, 0x36, 0xd4, 0xc9, 0x70, 0xbe, 0x11, 0x1f,
+	0xd4, 0xae, 0xe0, 0xd4, 0xa2, 0xb2, 0xcc, 0xe4, 0x54, 0x27, 0xce, 0x28, 0x76, 0x68, 0x58, 0x24,
+	0xb1, 0x81, 0x83, 0xc1, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0xb4, 0x9e, 0x7e, 0x30, 0x1d, 0x01,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
