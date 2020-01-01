@@ -25,10 +25,10 @@ func main() {
 	c := greetpb.NewGreetServiceClient(conn)
 
 	res, err := createUnaryCall(c)
+	fmt.Println(res)
 
 	createServerStreamingCall(c)
-
-	fmt.Println(res)
+	createClientStreamingCall(c)
 }
 
 func createUnaryCall(c greetpb.GreetServiceClient) (*greetpb.GreetResponse, error) {
@@ -45,7 +45,6 @@ func createUnaryCall(c greetpb.GreetServiceClient) (*greetpb.GreetResponse, erro
 		log.Fatal("Greet request raised an error: ", err)
 		return nil, err
 	}
-	log.Print("response from Greet: ", res)
 	return res, nil
 }
 
@@ -79,4 +78,56 @@ func createServerStreamingCall(c greetpb.GreetServiceClient) {
 		log.Print("Response from GreetManyTimes: ", mssg)
 	}
 
+}
+
+func createClientStreamingCall(c greetpb.GreetServiceClient) error {
+
+	stream, err := c.LongGreet(context.Background())
+	if err != nil {
+		log.Fatal("an error occurred whilst calling LongGreet: ", err)
+	}
+
+	requests := []*greetpb.LongGreetRequest{
+		&greetpb.LongGreetRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Devon",
+			},
+		},
+		&greetpb.LongGreetRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Dover",
+			},
+		},
+		&greetpb.LongGreetRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Doncaster",
+			},
+		},
+		&greetpb.LongGreetRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Durban",
+			},
+		},
+		&greetpb.LongGreetRequest{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Dudley",
+			},
+		},
+	}
+
+	// Iterate over requests slice and send each one to the server
+	for _, req := range requests {
+		log.Print("sending LongGreet request to server: ", req)
+		stream.Send(req)
+	}
+
+	// Close stream once all message requests have been sent to server - receive response from server
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatal("an error occurred receiving the server response from LongGreet: ", err)
+	}
+
+	fmt.Println("LongGreet response: ", res)
+
+	return nil
 }
