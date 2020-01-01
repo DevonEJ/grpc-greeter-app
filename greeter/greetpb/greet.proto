@@ -4,6 +4,23 @@ package greeter;
 
 option go_package="greetpb";
 
+
+// Define the greeting message, and the response and request messages
+message Greeting {
+    string firstName = 1;
+    string lastName = 2;
+    string favouriteCoffee = 3;
+
+}
+
+message GreetRequest {
+    Greeting greeting = 1;
+}
+
+message GreetResponse {
+    string response = 1;
+}
+
 service GreetService {}
 
 
